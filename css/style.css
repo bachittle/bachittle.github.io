@@ -25,6 +25,10 @@ article {
     width: 47%;
 }
 
+#left-panel img{
+    padding: 0 30px 0 30px;
+}
+
 #right-panel {
     background-color: grey;
     float: left;
@@ -32,11 +36,17 @@ article {
     width: 47%;
 }
 
-#left-panel ul {
-    list-style: none;
+
+
+img {
+    width: 40px;
+    height: 40px;
 }
 
-#left-panel li {
-    padding: 0 30px 0 0px;
-    display: inline;
+h1 {
+    font-size: 50px;
+}
+h2 {
+    font-size: 20px;
+    margin-bottom: 40px;
 }
