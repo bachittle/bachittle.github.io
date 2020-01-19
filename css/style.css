@@ -122,6 +122,9 @@ div#content img {
     .vue-typer.h2 {
         font-size: 4vw;
     }
+    div#left-panel img {
+        width: 9vw;
+    }
     div#left-panel, div#right-panel {
         width: 94%;
         margin: 2%;
