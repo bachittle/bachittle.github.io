@@ -1,52 +1,127 @@
 body {
-    background-color: black;
+    background-color: #023455;
     margin: 0;
     padding: 0;
-    line-height: 200%;
 }
 
-html, body, div {
+html, body, div#app {
+    font-family: 'Kanit', monospace;
     height: 98%;
 }
+
 
 article {
     position: relative;
     top: 50%;
     left: 50%;
     padding: 1rem;
-    text-align: center;
-    transform: translate(-50%, -70%);
-  }
+    transform: translate(-50%, -60%);
+    margin-right: 10px;
+}
 
-#left-panel {
-    background-color: grey;
+div#left-panel, div#right-panel {
+    background-color: #041b2c;
+    box-shadow: 0px 3px 20px rgba(0, 0, 0, 0.7);
+    color: white;
     float: left;
-    margin: 20px;
+    margin: 1.5%;
     width: 47%;
+    height: 98%;
 }
 
-#left-panel img{
-    padding: 0 30px 0 30px;
+
+
+/* left panel */
+div#left-panel img{
+    padding: 0 10px 0 0px;
+    width: 60px;
 }
 
-#right-panel {
-    background-color: grey;
+div#images {
+    margin-top: 20px;
+}
+div#left-panel a {
+    text-decoration: none;
+}
+
+/*
+div#left-panel h1 {
+    font-size: 50px;
+    margin: 0;
+}
+div#left-panel h2 {
+    font-size: 20px;
+    margin-bottom: 30px;
+}
+*/
+
+/* right panel */
+
+#terminal-user {
     float: left;
-    margin: 20px;
-    width: 47%;
+    position: relative;
+    bottom: 10px;
+    left: 20px;
+}
+
+#terminal-input {
+    float: left;
+    background-color: #041b2c;
+    color: white;
+    width: 40%;
+    height: 30px;
+    position: relative;
+    left: 27px;
+    top: 3px;
+    border-style: hidden;
+}
+
+#terminal-input:focus {
+    outline: none;
+}
+
+div#content {
+    clear: left;
+    position: relative;
+    margin: 0px 0px 0px 20px;
+    bottom: 25px;
+    top: 50%;
+    transform: translate(0, -70%);
+}
+
+div#content img {
+    width: 70%;
 }
 
 
 
-img {
-    width: 40px;
-    height: 40px;
+/* Vue Typer CSS */
+.vue-typer {
+    font-family: 'Kanit', monospace;
 }
 
-h1 {
+.vue-typer .custom.char {
+    color: white;
+}
+
+.vue-typer .custom.caret {
+    background-color: white;
+}
+
+.vue-typer.h1 {
     font-size: 50px;
 }
-h2 {
+
+.vue-typer.h2 {
     font-size: 20px;
-    margin-bottom: 40px;
+}
+@media only screen and (max-width: 768px) {
+    div#left-panel, div#right-panel {
+        width: 94%;
+        margin: 2%;
+    }
+
+    div#content img {
+        width: 60%;
+    }
 }

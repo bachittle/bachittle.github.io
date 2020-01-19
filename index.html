@@ -2,31 +2,69 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/style.css">
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <title>Bailey Chittle | Programmer</title>
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- Kanit Font -->
+    <link href="https://fonts.googleapis.com/css?family=Kanit&display=swap" rel="stylesheet">
+    <!-- VueTyper -->
+    <script src="https://unpkg.com/vue-typer/dist/vue-typer.min.js"></script>
 </head>
 <body>
-    <div id="left-panel">
-        <article>
-            <h1>Bailey Chittle</h1>
-            <h2>Creative caption here</h2>
-            <a href="https://www.github.com/bachittle">
-                <img id="Github" src="https://image.flaticon.com/icons/svg/25/25231.svg" alt="Github"> 
-            </a>
-            <a href="https://www.twitter.com/baileychittle">
-                <img id="Twitter" src="https://cdn.onlinewebfonts.com/svg/img_323492.png" alt="Twitter">
-            </a>
-            <a href="https://linkedin.com/in/bailey-chittle">
-                <img id="LinkedIn" src="https://image.flaticon.com/icons/svg/61/61109.svg" alt="LinkedIn">
-            </a>
-            
-            
-            
-        </article>
+    <div id="app">
+        <div id="left-panel">
+                <article>
+                <vue-typer 
+                    class="h1"
+                    text="Bailey Chittle" 
+                    :repeat='0'
+                    pre-type-delay='70'
+                >
+                </vue-typer>
+                <br>
+                <vue-typer 
+                    class="h2"
+                    :text='[
+                        "Motivated to Make a Better Tomorrow",
+                        "while(isAlive) {eat();code();sleep();}",
+                        "Star Web Designer",
+                        "I like turtles",
+                        `"The more you know, the more you realize you know nothing" -Socrates`
+                    ]'
+                    :repeat='Infinity'
+                    :shuffle='true'
+                    :pre-type-delay='1000'
+                    :pre-erase-delay='5000'
+                >
+                </vue-typer>
+                <br>
+                <div id="images">
+                    <a href="https://www.github.com/bachittle">
+                        <img id="Github" src="img/github.png" alt="Github"> 
+                    </a>
+                    <a href="https://linkedin.com/in/bailey-chittle">
+                        <img id="LinkedIn" src="img/linkedin.png" alt="LinkedIn">
+                    </a>
+                    <a href="mailto:bachittle@gmail.com">
+                        <img id="Mail" src="img/mail.png" alt="Mail">
+                    </a>
+                </div>
+
+            </article>
+        </div>
+        <div id="right-panel">
+            <p id="terminal-user">bailey@chittle:~$</p>
+            <input v-model="input" type="text" id="terminal-input" maxlength="20" autofocus>
+            <p id="input-results">{{ input }}</p>
+            <div id="content">
+                <img src="img/profile.JPG" alt="profile pic">
+            </div>
+        </div>
     </div>
-    <div id="right-panel">
-        <canvas></canvas>
-    </div>
+    
+    <script src="js/script.js"></script>
+    <script src="js/canvas.js"></script>
 </body>
+
 </html>
