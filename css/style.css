@@ -98,6 +98,7 @@ div#content img {
 /* Vue Typer CSS */
 .vue-typer {
     font-family: 'Kanit', monospace;
+    white-space: normal;
 }
 
 .vue-typer .custom.char {
@@ -115,9 +116,14 @@ div#content img {
 .vue-typer.h2 {
     font-size: 20px;
 }
+
+span.nowrap {
+    white-space: nowrap;
+}
+
 @media only screen and (max-width: 768px) {
     .vue-typer.h1 {
-        font-size: 7vw;
+        font-size: 10vw;
     }
     .vue-typer.h2 {
         font-size: 4vw;
@@ -131,6 +137,6 @@ div#content img {
     }
 
     div#content img {
-        width: 60%;
+        width: 40vw;
     }
 }

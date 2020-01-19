@@ -17,14 +17,15 @@
                 <article>
                 <vue-typer 
                     class="h1"
-                    text="Bailey Chittle" 
+                    text='Bailey Chittle' 
                     :repeat='0'
-                    pre-type-delay='70'
+                    :pre-type-delay='70'
                 >
                 </vue-typer>
                 <br>
                 <vue-typer 
                     class="h2"
+                    id="typewriter"
                     :text='[
                         "Motivated to Make a Better Tomorrow",
                         "while(isAlive) {eat();code();sleep();}",
@@ -36,6 +37,8 @@
                     :shuffle='true'
                     :pre-type-delay='1000'
                     :pre-erase-delay='5000'
+                    @typed-char="onTypedChar"
+                    @erased="onErased"
                 >
                 </vue-typer>
                 <br>
