@@ -115,12 +115,12 @@ div#content img {
 .vue-typer.h2 {
     font-size: 20px;
 }
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 768px) {
     .vue-typer.h1 {
-        font-size: 40px;
+        font-size: 7vw;
     }
     .vue-typer.h2 {
-        font-size: 17px;
+        font-size: 4vw;
     }
     div#left-panel, div#right-panel {
         width: 94%;
