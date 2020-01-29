@@ -55,18 +55,17 @@ div#left-panel h2 {
 }
 */
 
-/* right panel */
-
 #terminal-user {
     float: left;
     position: relative;
     bottom: 10px;
     left: 20px;
+    margin-bottom: 0;
 }
 
 #terminal-input {
-    float: left;
     background-color: #041b2c;
+    float: left;
     color: white;
     width: 40%;
     height: 30px;
@@ -80,17 +79,39 @@ div#left-panel h2 {
     outline: none;
 }
 
-div#content {
+div#input-results {
     clear: left;
+    background-color: #042641;
     position: relative;
-    margin: 0px 0px 0px 20px;
-    bottom: 25px;
-    top: 50%;
-    transform: translate(0, -70%);
+    margin: 0px 20px 0px 20px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    z-index: 1;
+    box-shadow: 0px 3px 20px rgba(0, 0, 0, 0.7);
+}
+div#input-results span {
+    position: relative;
+    display: block;
+    padding: 10px;
+}
+div#input-results span:hover {
+    background-color: #032c4b;
+}
+
+@media only screen and (min-width: 768px) {
+    div#content {
+        clear: left;
+        position: absolute;
+        margin-left: 20px;
+        top: 50%;
+        transform: translate(0, -50%);
+    }
 }
 
 div#content img {
     width: 70%;
+    border-radius: 10px;
+    box-shadow: 0px 3px 20px rgba(0, 0, 0, 0.7);
 }
 
 
@@ -131,12 +152,21 @@ span.nowrap {
     div#left-panel img {
         width: 9vw;
     }
-    div#left-panel, div#right-panel {
+    div#left-panel {
         width: 94%;
         margin: 2%;
     }
-
-    div#content img {
-        width: 40vw;
+    div#right-panel {
+        width: 94%;
+        height: 110%;
+        margin: 2%;
+    }
+    div#input-results {
+        margin-bottom: -20px;
+    }    
+    div#content {
+        clear: left;
+        position: relative;
+        margin: 40px 0px 0px 20px;
     }
 }

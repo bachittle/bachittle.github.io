@@ -4,22 +4,10 @@ new Vue({
     el: '#app',
     data: {
         input: "",
-        countWord: 0
-    },
-    created: function () {
-        this.caption = this.setRandomCaption();
+        countWord: 0,
+        inputIsFocused: false
     },
     methods: {
-        setRandomCaption: function() {
-            let captions = [
-                "Motivated to Make a Better Tomorrow",
-                "while(isAlive) {eat();\ncode();\nsleep();}",
-                "Star Web Designer",
-                "I like turtles"
-            ];
-
-            return captions[Math.floor(Math.random() * captions.length)];
-        },
         onTypedChar: function (typedChar, typedCharIndex) {
             if (typedCharIndex == 0) {
                 document.getElementById('typewriter').firstChild.innerHTML = '';
@@ -57,3 +45,4 @@ new Vue({
         'vue-typer': VueTyper
     }
 });
+console.log("How do you do, fellow programmer?");

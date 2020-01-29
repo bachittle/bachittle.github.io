@@ -1,16 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head> 
+    <title>Bailey Chittle</title>
+    <meta property="og:site_name" content="Bailey Chittle" />
+    <meta property="og:title" content="Bailey Chittle" />
+    <meta property="og:description" content="This is the site of Bailey Chittle, the Software and Web Developer that everyone should hire!" />
+    <meta property="og:image" content="img/profile.JPG" />
+    <meta property="og:type" content="website" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/style.css">
-    <!-- development version, includes helpful console warnings -->
+    <!--
+        development version, includes helpful console warnings
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    -->
+
+    <!-- 
+        production version, optimized for size and speed 
+    -->
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <!-- Kanit Font -->
     <link href="https://fonts.googleapis.com/css?family=Kanit&display=swap" rel="stylesheet">
     <!-- VueTyper -->
     <script src="https://unpkg.com/vue-typer/dist/vue-typer.min.js"></script>
 </head>
+
 <body>
     <div id="app">
         <div id="left-panel">
@@ -30,8 +44,10 @@
                         "Motivated to Make a Better Tomorrow",
                         "while(isAlive) {eat();code();sleep();}",
                         "Star Web Designer",
-                        "I like turtles",
-                        `"The more you know, the more you realize you know nothing" -Socrates`
+                        "My CSS is !important",
+                        `$("#Github").click();`,
+                        `"The more you know, the more you realize you know nothing" -Socrates`,
+                        "try typing something in the terminal"
                     ]'
                     :repeat='Infinity'
                     :shuffle='true'
@@ -58,8 +74,20 @@
         </div>
         <div id="right-panel">
             <p id="terminal-user">bailey@chittle:~$</p>
-            <input v-model="input" type="text" id="terminal-input" maxlength="20">
-            <p id="input-results">{{ input }}</p>
+            <input 
+                v-model="input" 
+                type="text" 
+                id="terminal-input" 
+                maxlength="20"
+                @focus="inputIsFocused=true"
+                @blur="inputIsFocused=false"
+            >
+            <div v-if="input.length != 0 && inputIsFocused" id="input-results">
+                <span>Work</span>
+                <span>In</span>
+                <span>Progress</span>
+            </div>
+
             <div id="content">
                 <img src="img/profile.JPG" alt="profile pic">
             </div>
