@@ -109,7 +109,7 @@ div#input-results span:hover {
 }
 
 div#content img {
-    width: 70%;
+    width: 80%;
     border-radius: 10px;
     box-shadow: 0px 3px 20px rgba(0, 0, 0, 0.7);
 }
@@ -157,6 +157,7 @@ span.nowrap {
         margin: 2%;
     }
     div#right-panel {
+        position: relative;
         width: 94%;
         height: 110%;
         margin: 2%;
@@ -166,7 +167,8 @@ span.nowrap {
     }    
     div#content {
         clear: left;
-        position: relative;
-        margin: 40px 0px 0px 20px;
+        position: absolute;
+        top: 20%;
+        margin: 20px;
     }
 }
