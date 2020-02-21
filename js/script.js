@@ -122,6 +122,7 @@ var VueParticles = Vue.component('vue-particles', {
             <ul>
                 <li><b>help</b>: you're here right now</li>
                 <li><b>home</b>: goes to the homescreen at startup</li>
+                <li><b>github</b>: goes to the github specifically for this project</li>
                 <li><b>projects</b>: showcases all of my projects that I've worked on</li>
                 <li><b>pong</b>: try out some classic pong written in javascript</li>
                 <li><b>spiral</b>: practice with html canvas by making spiraling circles</li>
@@ -146,6 +147,7 @@ var vm = new Vue({
         dropdownItems: [
             'help',
             'home',
+            'github',
             'projects',
             'pong',
             'spiral',
@@ -182,6 +184,15 @@ var vm = new Vue({
         },
         updateContent: function(item) {
             this.contentVal = item;
+            if (this.contentVal == "github") {
+                window.location.href = "http://github.com/bachittle/bachittle.github.io";
+            }
+            else if (this.contentVal == "old website") {
+                window.location.href = "http://0722bailey.github.io"
+            }
+            else if (this.contentVal == "discord music scraper") {
+                window.location.href = "https://github.com/bachittle/playlist-creator";
+            }
             this.inputIsFocused = false;
         },
         onTypedChar: function(typedChar, typedCharIndex) {
