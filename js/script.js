@@ -144,7 +144,7 @@ var vm = new Vue({
             '',
             '',
         ],
-        contentVal: "help",
+        contentVal: "home",
     },
     methods: {
         updateDropdown: function() {
