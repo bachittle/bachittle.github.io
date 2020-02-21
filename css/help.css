@@ -1,0 +1,21 @@
+div#content-text {
+    background-color: rgba(2, 52, 85, 0.7);
+    position: absolute;
+    padding-left: 10px;;
+    margin: -10px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    border-radius: 10px;
+}
+
+@media only screen and (max-width: 768px) {
+    div#content {
+        width: 95%;
+    }
+}
+@media only screen and (min-width: 768px) {
+    div#content {
+        width: 43%;
+    }
+}

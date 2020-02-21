@@ -8,21 +8,27 @@
     <meta property="og:image" content="http://chittle.codes/img/profile.JPG" />
     <meta property="og:type" content="website" />
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="./css/style.css">
     <!--
         development version, includes helpful console warnings
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
     <!-- 
         production version, optimized for size and speed 
-    -->
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    -->
     <!-- Kanit Font -->
     <link href="https://fonts.googleapis.com/css?family=Kanit&display=swap" rel="stylesheet">
     <!-- VueTyper -->
     <script src="https://unpkg.com/vue-typer/dist/vue-typer.min.js"></script>
+
+    <!--fuzzy search-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.4.6/fuse.min.js"></script>
+
+    <!-- particles.js -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 </head>
 
 <body>
@@ -41,13 +47,13 @@
                     class="h2"
                     id="typewriter"
                     :text='[
+                        "The Software and Web Developer that everyone should hire!",
                         "Motivated to Make a Better Tomorrow",
                         "while(isAlive) {eat();code();sleep();}",
                         "Star Web Designer",
                         "My CSS is !important",
                         `$("#Github").click();`,
                         `"The more you know, the more you realize you know nothing" -Socrates`,
-                        "Try typing something in the terminal to your right (or below if you are on mobile)"
                     ]'
                     :repeat='Infinity'
                     :shuffle='true'
@@ -57,6 +63,8 @@
                     @erased="onErased"
                 >
                 </vue-typer>
+                <h1 v-if="false">Bailey Chittle</h1>
+                <h2 v-if="false">The Software and Web Developer that everyone should hire!</h2>
                 <br>
                 <div id="images">
                     <a href="https://www.github.com/bachittle">
@@ -76,26 +84,50 @@
             <p id="terminal-user">bailey@chittle:~$</p>
             <input 
                 v-model="input" 
+                v-on:input="updateDropdown"
                 type="text" 
                 id="terminal-input" 
                 maxlength="20"
                 @focus="inputIsFocused=true"
-                @blur="inputIsFocused=false"
             >
-            <div v-if="input.length != 0 && inputIsFocused" id="input-results">
-                <span>Work</span>
-                <span>In</span>
-                <span>Progress</span>
+            <div v-if="itemsOnDom[0].length != 0 && inputIsFocused" id="input-results">
+                <div v-for="item in itemsOnDom">
+                    <span v-if="item.length != 0" @click="updateContent(item)">{{ item }}</span>
+                </div>
             </div>
+            
 
-            <div id="content">
+            <div id="content" v-if='contentVal == "home"'>
+                <p>
+                    Type in "projects" in the terminal to see a list of projects I've worked on,
+                    or "help" for everything else. 
+                </p>
                 <img src="img/profile.JPG" alt="profile pic">
+            </div>
+            <div id="content" v-else-if='contentVal == "help"'>
+                <vue-particles></vue-particles>
+                <div id="content-text">
+                    <h3>Help</h3>
+                    <p>Here is a list of what each command does:</p>
+                    <ul>
+                        <li><b>help</b>: you're here right now</li>
+                        <li><b>home</b>: goes to the homescreen at startup</li>
+                        <li><b>projects</b>: showcases all of my projects that I've worked on</li>
+                        <li><b>pong</b>: try out some classic pong written in javascript</li>
+                        <li><b>spiral</b>: practice with html canvas by making spiraling circles</li>
+                        <li><b>old website</b>: links to my old portfolio site</li>
+                        <li><b>discord music scraper</b>: go here if you want to scrape some music!</li>
+                    </ul>
+                </div>
+                <link rel="stylesheet" href="css/help.css">
+            </div>
+            <div id="content" v-else>
+                <p>not implemented yet :(</p>
             </div>
         </div>
     </div>
     
-    <script src="js/script.js"></script>
-    <script src="js/canvas.js"></script>
+    <script type="module" src="js/script.js"></script>
 </body>
 
 </html>

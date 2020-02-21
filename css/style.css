@@ -44,16 +44,18 @@ div#left-panel a {
     text-decoration: none;
 }
 
-/*
 div#left-panel h1 {
     font-size: 50px;
-    margin: 0;
+    font-family: 'Kanit', monospace;
+    font-weight: normal;
+    margin-bottom: -10px;
 }
 div#left-panel h2 {
     font-size: 20px;
-    margin-bottom: 30px;
+    font-family: 'Kanit', monospace;
+    font-weight: normal;
+    margin-bottom: -10px;
 }
-*/
 
 #terminal-user {
     float: left;
@@ -103,8 +105,9 @@ div#input-results span:hover {
         clear: left;
         position: absolute;
         margin-left: 20px;
-        top: 50%;
-        transform: translate(0, -50%);
+        margin-right: 30px;
+        top: 40%;
+        transform: translate(0, -40%);
     }
 }
 
@@ -113,8 +116,6 @@ div#content img {
     border-radius: 10px;
     box-shadow: 0px 3px 20px rgba(0, 0, 0, 0.7);
 }
-
-
 
 /* Vue Typer CSS */
 .vue-typer {
@@ -168,7 +169,9 @@ span.nowrap {
     div#content {
         clear: left;
         position: absolute;
-        top: 20%;
+        top: 25%;
+        transform: translate(0, -15%);
         margin: 20px;
     }
 }
+
