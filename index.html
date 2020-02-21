@@ -84,6 +84,7 @@
             <p id="terminal-user">bailey@chittle:~$</p>
             <input 
                 v-model="input" 
+                v-on:input="updateDropdown"
                 type="text" 
                 id="terminal-input" 
                 maxlength="20"
@@ -126,7 +127,7 @@
         </div>
     </div>
     
-    <script src="js/script.js"></script>
+    <script type="module" src="js/script.js"></script>
 </body>
 
 </html>
