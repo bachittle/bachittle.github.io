@@ -160,7 +160,7 @@ var vm = new Vue({
             '',
             '',
         ],
-        contentVal: "pong",
+        contentVal: "home",
     },
     methods: {
         updateDropdown: function() {
