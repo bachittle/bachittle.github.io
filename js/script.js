@@ -114,7 +114,23 @@ particlesJS("particles-js", {
 
 var VueParticles = Vue.component('vue-particles', {
     template: `
-    <div id="particles-js" style="height: 500px;"></div>
+    <div id="particles-container">
+        <div id="particles-js" style="height: 500px;"></div>
+        <div id="content-text">
+            <h3>Help</h3>
+            <p>Here is a list of what each command does:</p>
+            <ul>
+                <li><b>help</b>: you're here right now</li>
+                <li><b>home</b>: goes to the homescreen at startup</li>
+                <li><b>projects</b>: showcases all of my projects that I've worked on</li>
+                <li><b>pong</b>: try out some classic pong written in javascript</li>
+                <li><b>spiral</b>: practice with html canvas by making spiraling circles</li>
+                <li><b>old website</b>: links to my old portfolio site</li>
+                <li><b>discord music scraper</b>: go here if you want to scrape some music!</li>
+            </ul>
+        </div>
+        <link rel="stylesheet" href="css/help.css">
+    </div>
     `,
     mounted: function() {
         makeParticles();
@@ -144,7 +160,7 @@ var vm = new Vue({
             '',
             '',
         ],
-        contentVal: "home",
+        contentVal: "pong",
     },
     methods: {
         updateDropdown: function() {
@@ -203,7 +219,8 @@ var vm = new Vue({
     },
     components: {
         'vue-typer': VueTyper,
-        'vue-particles': VueParticles
+        'vue-particles': VueParticles,
+        'pong': VuePong
     },
 });
 

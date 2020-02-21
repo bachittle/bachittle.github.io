@@ -86,6 +86,7 @@
                 v-model="input" 
                 v-on:input="updateDropdown"
                 type="text" 
+                autocomplete="off"
                 id="terminal-input" 
                 maxlength="20"
                 @focus="inputIsFocused=true"
@@ -106,20 +107,9 @@
             </div>
             <div id="content" v-else-if='contentVal == "help"'>
                 <vue-particles></vue-particles>
-                <div id="content-text">
-                    <h3>Help</h3>
-                    <p>Here is a list of what each command does:</p>
-                    <ul>
-                        <li><b>help</b>: you're here right now</li>
-                        <li><b>home</b>: goes to the homescreen at startup</li>
-                        <li><b>projects</b>: showcases all of my projects that I've worked on</li>
-                        <li><b>pong</b>: try out some classic pong written in javascript</li>
-                        <li><b>spiral</b>: practice with html canvas by making spiraling circles</li>
-                        <li><b>old website</b>: links to my old portfolio site</li>
-                        <li><b>discord music scraper</b>: go here if you want to scrape some music!</li>
-                    </ul>
-                </div>
-                <link rel="stylesheet" href="css/help.css">
+            </div>
+            <div id="content" v-else-if='contentVal == "pong"'>
+                <pong></pong>
             </div>
             <div id="content" v-else>
                 <p>not implemented yet :(</p>
@@ -127,7 +117,9 @@
         </div>
     </div>
     
-    <script type="module" src="js/script.js"></script>
+
+    <script src="js/pong.js"></script>
+    <script src="js/script.js"></script>
 </body>
 
 </html>
