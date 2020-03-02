@@ -4,7 +4,7 @@
  */
 
 import {shuffle} from './utils.js'
-import {mattSort, bubbleSort, selectionSort} from './sorting-algs.js'
+import {mattSort, bogoSort, bubbleSort, selectionSort, quickSort, insertionSort} from './sorting-algs.js'
 
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
@@ -190,6 +190,15 @@ async function sortArray(sort, numArray, option) {
         case 'selectionSort':
             await selectionSort(numArray, visuals, option);
             break;
+        case 'quickSort':
+            numArray = await quickSort(numArray, visuals, option);
+            break;
+        case 'insertionSort':
+            await insertionSort(numArray, visuals, option);
+            break;
+        case 'bogoSort':
+            await bogoSort(numArray, visuals, option);
+            break;
     }
     init(option.val);
     animate();
@@ -200,8 +209,8 @@ document.getElementById("sortArray").onclick = async function() {
     }
     option1.val = 'v1';
     option2.val = 'v2';
-    console.log(option1);
-    console.log(option2);
+    //console.log(option1);
+    //console.log(option2);
     
     sortArray(sort1, numArray1, option1);
     sortArray(sort2, numArray2, option2);
