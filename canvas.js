@@ -4,6 +4,7 @@
  */
 
 import {shuffle} from './utils.js'
+import {mattSort, bubbleSort, selectionSort} from './sorting-algs.js'
 
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
@@ -85,85 +86,125 @@ class Bar {
 
 let numArray1 = [];
 let numArray2 = [];
+let sizeOfArr = 10;
 function initializeNumArray(arr) {
-    for(let i = 0; i < 30; i++) {
+    for(let i = 0; i < sizeOfArr; i++) {
         arr[i] = i+1;
     }
 }
+
 initializeNumArray(numArray1);
 initializeNumArray(numArray2);
 
-let visualArray1, visualArray2;
+let visuals = {v1: [], v2: []};
 
-function init(option = "barchart") {
-    const itemWidth = canvas.width / (33*2);
-    const itemHeight = canvas.height / 33;
-    visualArray1 = [];
-    visualArray2 = [];
-    for (let i = 0; i < 30; i++) {
+function init(name="both", option = "barchart") {
+    const itemWidth = canvas.width * 0.48 / (sizeOfArr);
+    const itemHeight = canvas.height * 0.9 / sizeOfArr;
+    if (name==='v1' || name==='both')
+        visuals.v1 = [];
+    if (name==='v2' || name==='both')
+        visuals.v2 = [];
+    for (let i = 0; i < sizeOfArr; i++) {
         switch (option) {
             case "barchart":
-                let j1 = numArray1[i] * itemHeight;
-                let j2 = numArray2[i] * itemHeight;
-                visualArray1.push(new Bar(i * itemWidth + itemWidth, canvas.height - j1, j1, itemWidth));
-                visualArray2.push(new Bar(i * itemWidth + itemWidth * 33, canvas.height - j2, j2, itemWidth));
+                let j1, j2;
+                if (name==='v1' || name==='both')
+                    j1 = numArray1[i] * itemHeight;
+                if (name==='v2' || name==='both')
+                    j2 = numArray2[i] * itemHeight;
+                if (name==='v1' || name==='both')
+                    visuals.v1.push(new Bar(i * itemWidth*0.9 + (sizeOfArr / 20), canvas.height - j1, j1, itemWidth));
+                if (name==='v2' || name==='both')
+                    visuals.v2.push(new Bar(i * itemWidth*0.9 + itemWidth * (sizeOfArr+(sizeOfArr/20)), canvas.height - j2, j2, itemWidth));
                 break;
         }
     }
 }
 
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
 
-// custom settings event handlers
-document.getElementById('shuffleArray').onclick = function() {
+
+// option is an object so that it can be passed by reference and changed here
+// it is used in shuffleArray when wanting to stop execution of any functions
+// and it is used in sortArray so that the sorting function knows what array it is
+// acting upon
+
+
+// UI event handlers
+let sort1 = document.getElementById('sort1').value;
+let sort2 = document.getElementById('sort2').value;
+
+let option1 = {};
+let option2 = {};
+
+function shuffleNumArrays() {
+    option1.val = 'stop';
+    option2.val = 'stop';
     shuffle(numArray1);
     numArray2 = [];
     numArray1.forEach(x => {
         numArray2.push(x);
-    })
-    console.log(numArray1);
-    console.log(numArray2);
+    });
     init();
     animate();
+}
+
+document.getElementById('sort1').onchange = function() {
+    option1.val = 'stop';
+    option2.val = 'stop';
+    sort1 = document.getElementById('sort1').value;
+    animate();
+}
+document.getElementById('sort2').onchange = function() {
+    option1.val = 'stop';
+    option2.val = 'stop';
+    sort2 = document.getElementById('sort2').value;
+    animate();
+}
+
+document.getElementById('shuffleArray').onclick = function() {
+    shuffleNumArrays();
 };
 
-async function mattSort(arr) {
-    for (let i = 0; i < arr.length; ) {
-        if (arr[i] > arr[i + 1]) {
-            let x = arr[i];
-            arr[i] = arr[i + 1];
-            arr[i + 1] = x;
-            i = -1;
-        }
-        i++;
-        init();
-        visualArray1[i].color = 'red';
-        animate();
-        await sleep(30);
-    }
+var numOfArrInput = document.getElementById('numOfArr')
+numOfArrInput.onchange = function() {
+    sizeOfArr = Math.floor(Math.abs(+numOfArrInput.value));
+    console.log(sizeOfArr);
+    numArray1 = [];
+    numArray2 = [];
+    initializeNumArray(numArray1);
+    initializeNumArray(numArray2);
+    init();
+    animate();
 }
 
-async function bubbleSort(arr) {
-    for (let i = 0; i < arr.length; i++) {
-        for (let j = arr.length - 1; j >= i; j--) {
-            if (arr[j-1] > arr[j]) {
-                let x = arr[j];
-                arr[j] = arr[j - 1]; 
-                arr[j-1] = x;
-            }
-            visualArray2[j].color = 'red';
-            animate();
-            await sleep(30);   
-        }
-        
+let initSortValues = {sort1, sort2};
+async function sortArray(sort, numArray, option) {
+    switch(sort) {
+        case 'mattSort':
+            await mattSort(numArray, visuals, option);
+            break;
+        case 'bubbleSort':
+            await bubbleSort(numArray, visuals, option);
+            break;
+        case 'selectionSort':
+            await selectionSort(numArray, visuals, option);
+            break;
     }
+    init(option.val);
+    animate();
 }
-
-document.getElementById("sortArray").onclick = function() {
-    mattSort(numArray1);
-    bubbleSort(numArray2);
+document.getElementById("sortArray").onclick = async function() {
+    if (option1.val === 'v1') {
+        shuffleNumArrays();
+    }
+    option1.val = 'v1';
+    option2.val = 'v2';
+    console.log(option1);
+    console.log(option2);
+    
+    sortArray(sort1, numArray1, option1);
+    sortArray(sort2, numArray2, option2);
 }
 
 
@@ -173,15 +214,17 @@ function animate() {
 
     //ctx.fillText('HTML CANVAS BOILERPLATE', mouse.x, mouse.y);
     
-    ctx.fillText('mattSort', 10, 10);
-    visualArray1.forEach(object => {
+    ctx.fillText(sort1, 10, 10);
+    visuals.v1.forEach(object => {
       object.update();
     });
-    ctx.fillText('bubbleSort', canvas.width / 2 + 10, 10);
-    visualArray2.forEach(object => {
+    ctx.fillText(sort2, canvas.width / 2 + 10, 10);
+    visuals.v2.forEach(object => {
       object.update();
     });
 }
 
 init();
 animate();
+
+export {init, animate}
