@@ -217,17 +217,18 @@ document.getElementById("sortArray").onclick = async function() {
 }
 
 
+ctx.font = "25px Arial";
 // Animation Loop
 function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     //ctx.fillText('HTML CANVAS BOILERPLATE', mouse.x, mouse.y);
     
-    ctx.fillText(sort1, 10, 10);
+    ctx.fillText(sort1, 10, 30);
     visuals.v1.forEach(object => {
       object.update();
     });
-    ctx.fillText(sort2, canvas.width / 2 + 10, 10);
+    ctx.fillText(sort2, canvas.width / 2 + 10, 30);
     visuals.v2.forEach(object => {
       object.update();
     });
