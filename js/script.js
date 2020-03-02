@@ -153,6 +153,7 @@ var vm = new Vue({
             'spiral',
             'old website',
             'discord music scraper',
+            'sorting'
         ],
         itemsOnDom: [
             '',
@@ -192,6 +193,9 @@ var vm = new Vue({
             }
             else if (this.contentVal == "discord music scraper") {
                 window.location.href = "https://github.com/bachittle/playlist-creator";
+            }
+            else if (this.contentVal == "sorting") {
+                window.location.href = "https://chittle.codes/sorting.html";
             }
             this.inputIsFocused = false;
         },
