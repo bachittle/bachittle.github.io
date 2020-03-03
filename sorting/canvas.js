@@ -268,6 +268,7 @@ function animate() {
     visuals.v1.forEach(object => {
       object.update();
     });
+    ctx.fillStyle = "black";     // this may be inefficient but it fixes a text colouring bug
     ctx.fillText(sort2, canvas.width / 2 + 10, 30);
     visuals.v2.forEach(object => {
       object.update();
