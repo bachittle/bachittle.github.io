@@ -13,4 +13,12 @@ function shuffle(a) {
     return a;
 }
 
-export {shuffle};
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function getHexColor(number){
+    return 'hsl('+(number * 360) + ", 100%, 50%)";
+}
+
+export {shuffle, sleep, getHexColor};

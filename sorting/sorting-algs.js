@@ -1,10 +1,10 @@
 import {init, animate} from './canvas.js';
-import {shuffle} from './utils.js';
+import {shuffle, sleep} from './utils.js';
 
 let time = 30;
 var speedInput = document.getElementById('speed');
 speedInput.onchange = function() {
-    time = Math.floor(1000 / Math.abs(+speedInput.value));
+    time = 200 - Math.floor(Math.abs(+speedInput.value)) * 2;
     console.log("time: "+time);
 }
 
@@ -12,12 +12,13 @@ speedInput.onchange = function() {
 // function that has to be run after every iteration
 function iterationUpdate(visuals, i, option, j) {
     init(option.val);
-    if (i < visuals[option.val].length && i >= 0) {
-        if (j) {
-            visuals[option.val][j].color = 'blue';
+    if (visuals[option.val])
+        if (i < visuals[option.val].length && i >= 0) {
+            if (j) {
+                visuals[option.val][j].color = 'blue';
+            }
+            visuals[option.val][i].color = 'red';
         }
-        visuals[option.val][i].color = 'red';
-    }
     animate();
     return new Promise(resolve => setTimeout(resolve, time));
 }
@@ -62,7 +63,13 @@ async function selectionSort(numArr, visualArr, option) {
             if (numArr[j] < numArr[minIndex]) {
                 minIndex = j;
             }
-            await iterationUpdate(visualArr, j, option, minIndex);
+            if (numArr.length <= 600) {
+                await iterationUpdate(visualArr, j, option, minIndex);
+            }
+        }
+        if (numArr.length > 600) {
+            await iterationUpdate(visualArr, i, option);
+            await sleep(500);
         }
         let x = numArr[i];
         numArr[i] = numArr[minIndex]; 
@@ -77,12 +84,19 @@ async function partition(items, visualArr, option, left, right) {
         j       = right;
 
     while (i <= j) {
+        if (option.val === 'stop') return new Promise((resolve, reject) => {resolve()});
         while (items[i] < pivot) {
-            await iterationUpdate(visualArr, i, option);
+            // lower unnecessary draws for speed at larger values
+            if (items.length <= 200) {
+                await iterationUpdate(visualArr, i, option);
+            }
             i++;
         }
         while (items[j] > pivot) {
-            await iterationUpdate(visualArr, j, option);
+            // lower unnecessary draws for speed at larger values
+            if (items.length <= 200) {
+                await iterationUpdate(visualArr, j, option);
+            }
             j--;
         }
         if (i <= j) {
@@ -92,8 +106,11 @@ async function partition(items, visualArr, option, left, right) {
             i++;
             j--;
         }
+        if (time !== 0)
         await iterationUpdate(visualArr, i, option);
     }
+    if (time === 0)
+    await iterationUpdate(visualArr, i, option);
 
     return i;
 }
@@ -106,12 +123,25 @@ async function quickSort(items, visualArr, option, left=0, right=items.length - 
 
         index = await partition(items, visualArr, option, left, right);
 
+        if (option.val === 'stop') return new Promise((resolve, reject) => {resolve()});
         if (left < index - 1) {
-            await quickSort(items, visualArr, option, left, index - 1);
+            // even more efficiencies at larger values
+            if (items.length <= 400) {
+                await quickSort(items, visualArr, option, left, index - 1);
+            }
+            else {
+                quickSort(items, visualArr, option, left, index - 1);
+            }
         }
 
         if (index < right) {
-            await quickSort(items, visualArr, option, index, right);
+            // even more efficiencies at larger values
+            if (items.length <= 400) {
+                await quickSort(items, visualArr, option, index, right);
+            }
+            else {
+                quickSort(items, visualArr, option, index, right);
+            }
         }
 
     }
@@ -123,17 +153,29 @@ async function insertionSort(numArr, visualArr, option) {
     for (let i = 0; i < numArr.length; i++) {
         for (let j = 0; j < i; j++) {
             if (numArr[i] < numArr[j]) {
+                if (option.val === 'stop') 
+                    return new Promise((resolve, reject) => {resolve()});
+
                 let x = numArr[i];
                 numArr[i] = numArr[j];
                 numArr[j] = x;
+
+                // lower the amount of draws to swaps only for speed
+                if (numArr.length > 200 && time !== 0) {
+                    await iterationUpdate(visualArr, j, option, i);
+                }
             }
-            await iterationUpdate(visualArr, j, option, i);
+            
+        }
+        if (numArr.length <= 200 || time === 0) {
+            await iterationUpdate(visualArr, i, option);
         }
     }
 }
 
 async function bogoSort(numArr, visualArr, option) {
     for (let i = 0; i < numArr.length; i++) {
+        if (option.val === 'stop') break;
         if (numArr[i] > numArr[i+1]) {
             shuffle(numArr);
             i = -1;

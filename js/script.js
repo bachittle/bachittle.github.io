@@ -195,7 +195,7 @@ var vm = new Vue({
                 window.location.href = "https://github.com/bachittle/playlist-creator";
             }
             else if (this.contentVal == "sorting") {
-                window.location.href = "https://chittle.codes/sorting.html";
+                window.location.href = "./sorting";
             }
             this.inputIsFocused = false;
         },
