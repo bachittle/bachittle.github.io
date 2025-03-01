@@ -1,0 +1,405 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #222;
+    color: white;
+    font-family: 'Courier New', monospace;
+    overflow: hidden;
+}
+
+canvas {
+    border: 4px solid #444;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+    transition: width 0.8s ease-in-out, height 0.8s ease-in-out;
+}
+
+#game-container {
+    position: relative;
+}
+
+#consciousness-level {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    padding: 5px;
+    color: #0ff;
+}
+
+#score-display {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    padding: 5px;
+}
+
+/* Control Timer */
+.control-timer {
+    position: absolute;
+    top: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(170, 85, 255, 0.7);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    z-index: 100;
+    transition: opacity 0.3s, left 0.3s, top 0.3s;
+    text-align: center;
+    border: 2px solid #aa55ff;
+    box-shadow: 0 0 10px rgba(170, 85, 255, 0.5);
+    animation: pulse 1.5s infinite alternate;
+    min-width: 140px;
+}
+
+.control-timer.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Phase Timer */
+.phase-timer {
+    position: absolute;
+    top: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(255, 255, 0, 0.7);
+    color: black;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    z-index: 100;
+    transition: opacity 0.3s, left 0.3s, top 0.3s;
+    text-align: center;
+    border: 2px solid #ffff00;
+    box-shadow: 0 0 10px rgba(255, 255, 0, 0.5);
+    animation: pulse-yellow 1.5s infinite alternate;
+    min-width: 140px;
+}
+
+.phase-timer.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.timer-value {
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+@keyframes pulse {
+    from {
+        box-shadow: 0 0 5px rgba(170, 85, 255, 0.5);
+    }
+    to {
+        box-shadow: 0 0 15px rgba(170, 85, 255, 0.8);
+    }
+}
+
+@keyframes pulse-yellow {
+    from {
+        box-shadow: 0 0 5px rgba(255, 255, 0, 0.5);
+    }
+    to {
+        box-shadow: 0 0 15px rgba(255, 255, 0, 0.8);
+    }
+}
+
+#dialog-box {
+    width: 600px;
+    min-height: 40px;
+    margin-top: 20px;
+    padding: 10px;
+    border: 2px solid #555;
+    border-radius: 5px;
+    background-color: #333;
+    opacity: 0;
+    transition: opacity 0.5s;
+    font-size: 1.1rem;
+}
+
+#high-score {
+    margin-top: 10px;
+    color: #ffd700;
+}
+
+/* Food Info Panel - Updated for collapse/expand */
+#food-info-panel {
+    position: absolute;
+    top: 10px;
+    right: -220px;
+    width: 200px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border: 2px solid #444;
+    border-radius: 5px;
+    padding: 0;
+    z-index: 5;
+    transition: transform 0.3s ease, height 0.3s ease, opacity 0.3s ease;
+    overflow: hidden;
+}
+
+#food-info-panel.collapsed {
+    height: 32px;
+    transform: translateX(180px);
+}
+
+#food-info-panel.expanded {
+    height: auto;
+    transform: translateX(0);
+}
+
+.food-legend-header {
+    background-color: #333;
+    color: #0ff;
+    padding: 8px 10px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    border-bottom: 1px solid #555;
+}
+
+.food-legend-header:hover {
+    background-color: #444;
+}
+
+.toggle-icon {
+    width: 16px;
+    height: 16px;
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.toggle-icon:before,
+.toggle-icon:after {
+    content: '';
+    position: absolute;
+    background-color: #0ff;
+    transition: transform 0.3s ease;
+}
+
+.toggle-icon:before {
+    width: 100%;
+    height: 2px;
+    top: 7px;
+    left: 0;
+}
+
+.toggle-icon:after {
+    width: 2px;
+    height: 100%;
+    top: 0;
+    left: 7px;
+}
+
+.collapsed .toggle-icon:after {
+    transform: rotate(90deg);
+}
+
+.expanded .toggle-icon:after {
+    transform: rotate(0);
+}
+
+.food-legend-content {
+    padding: 10px;
+    transition: opacity 0.3s ease, max-height 0.3s ease;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+}
+
+.expanded .food-legend-content {
+    max-height: 300px;
+    opacity: 1;
+}
+
+.key-hint {
+    font-size: 0.7rem;
+    color: #999;
+    margin-left: 5px;
+}
+
+.food-legend {
+    margin-bottom: 10px;
+}
+
+.food-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.food-color {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+
+.food-description {
+    font-size: 0.75rem;
+    flex: 1;
+}
+
+.food-highlight {
+    position: absolute;
+    font-size: 0.8rem;
+    padding: 3px 6px;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 3px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+    color: white;
+    z-index: 10;
+}
+
+/* Expansion Animation */
+.expansion-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(85, 255, 85, 0.15);
+    pointer-events: none;
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+/* Menu Styles */
+.menu-screen {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    transition: opacity 0.5s;
+}
+
+.menu-title {
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    color: #0ff;
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+.menu-subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    color: #0ff;
+    opacity: 0.8;
+}
+
+.menu-button {
+    background-color: #0aa;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    min-width: 200px;
+    font-family: 'Courier New', monospace;
+}
+
+.menu-button:hover {
+    background-color: #0ff;
+    color: #222;
+    transform: scale(1.05);
+}
+
+.leaderboard {
+    background-color: #333;
+    border-radius: 5px;
+    padding: 20px;
+    margin-top: 20px;
+    width: 80%;
+    max-width: 500px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.leaderboard-entry {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 10px;
+    border-bottom: 1px solid #555;
+}
+
+.leaderboard-entry:last-child {
+    border-bottom: none;
+}
+
+.consciousness-indicator {
+    display: inline-block;
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.back-button:hover {
+    background-color: #555;
+}
+
+.hidden {
+    display: none;
+    opacity: 0;
+}
+
+/* Game Over Styles */
+.game-over-text {
+    font-size: 2.5rem;
+    color: #ff5555;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+}
+
+.final-score {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.consciousness-reached {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    color: #0ff;
+}
+
+.name-input {
+    margin: 20px 0;
+    padding: 10px;
+    border-radius: 5px;
+    border: 2px solid #0aa;
+    background-color: #222;
+    color: white;
+    font-family: 'Courier New', monospace;
+    font-size: 1rem;
+    text-align: center;
+}
