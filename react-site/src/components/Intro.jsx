@@ -1,11 +1,11 @@
 import { FaGithub, FaLinkedin, FaFileAlt, FaProjectDiagram } from 'react-icons/fa';
-import ParticleAnim from './ParticleAnim';
+import ShaderAnim from './ShaderAnim';
 import Typewriter from './Typewriter';
 
 export default function Intro({ onShowProjects }) {
   return (
     <div className="intro">
-      <ParticleAnim />
+      <ShaderAnim />
       <div className="my-text">
         <h1 className="title"><Typewriter text="Bailey Chittle" eraseText={false} /></h1>
         <p className="description">
