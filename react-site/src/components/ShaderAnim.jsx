@@ -120,8 +120,8 @@ export default function ShaderAnim() {
     const uRes = gl.getUniformLocation(program, 'u_resolution');
 
     function resize() {
-      canvas.width = canvas.clientWidth;
-      canvas.height = canvas.clientHeight;
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
       gl.viewport(0, 0, canvas.width, canvas.height);
       gl.uniform2f(uRes, canvas.width, canvas.height);
     }
@@ -144,6 +144,17 @@ export default function ShaderAnim() {
   }, []);
 
   return (
-    <canvas ref={canvasRef} style={{ position: 'absolute', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: -1 }} />
+    <canvas
+      ref={canvasRef}
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100vw',
+        height: '100vh',
+        zIndex: -1,
+        pointerEvents: 'none',
+      }}
+    />
   );
 }
