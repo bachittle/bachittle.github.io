@@ -31,6 +31,7 @@ function onSnapEnd() {
 function init() {
   board = ChessBoard('board', {
     draggable: true,
+    pieceTheme: 'img/chesspieces/wikipedia/{piece}.png',
     position: 'start',
     onDragStart: onDragStart,
     onDrop: onDrop,
