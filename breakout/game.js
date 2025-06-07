@@ -1,6 +1,16 @@
 const canvas = document.getElementById('breakoutCanvas');
 const ctx = canvas.getContext('2d');
 
+const isMobile = /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+const mobileControls = document.getElementById('mobile-controls');
+if (isMobile && mobileControls) {
+  mobileControls.style.display = 'flex';
+}
+
+if (isMobile) {
+  document.body.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false });
+}
+
 const paddleHeight = 10;
 const paddleWidth = 75;
 let paddleX = (canvas.width - paddleWidth) / 2;
@@ -10,6 +20,29 @@ let leftPressed = false;
 
 document.addEventListener('keydown', keyDownHandler, false);
 document.addEventListener('keyup', keyUpHandler, false);
+
+if (isMobile) {
+  const leftBtn = document.getElementById('leftBtn');
+  const rightBtn = document.getElementById('rightBtn');
+  if (leftBtn && rightBtn) {
+    const pressLeft = () => { leftPressed = true; };
+    const releaseLeft = () => { leftPressed = false; };
+    const pressRight = () => { rightPressed = true; };
+    const releaseRight = () => { rightPressed = false; };
+    leftBtn.addEventListener('touchstart', pressLeft);
+    leftBtn.addEventListener('touchend', releaseLeft);
+    rightBtn.addEventListener('touchstart', pressRight);
+    rightBtn.addEventListener('touchend', releaseRight);
+  }
+
+  canvas.addEventListener('touchmove', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const touch = e.touches[0];
+    const relativeX = touch.clientX - rect.left;
+    paddleX = Math.min(Math.max(relativeX - paddleWidth / 2, 0), canvas.width - paddleWidth);
+    e.preventDefault();
+  }, { passive: false });
+}
 
 function keyDownHandler(e) {
   if (e.key === 'Right' || e.key === 'ArrowRight') {
