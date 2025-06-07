@@ -1,4 +1,5 @@
 const size = 4;
+const isMobile = /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 let board = [];
 let score = 0;
 
@@ -11,6 +12,9 @@ function init() {
     document.addEventListener('keydown', handleKey);
     document.addEventListener('touchstart', handleTouchStart, { passive: false });
     document.addEventListener('touchend', handleTouchEnd, { passive: false });
+    if (isMobile) {
+        document.body.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false });
+    }
 }
 
 function handleKey(e) {
@@ -47,6 +51,7 @@ function handleTouchStart(e) {
         touchStartX = e.touches[0].clientX;
         touchStartY = e.touches[0].clientY;
     }
+    if (e.preventDefault) e.preventDefault();
 }
 
 function handleTouchEnd(e) {
