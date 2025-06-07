@@ -1,0 +1,47 @@
+body {
+    font-family: 'Quicksand', sans-serif;
+    background-color: #222;
+    color: #eee;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+}
+
+#board {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    gap: 5px;
+    margin-bottom: 20px;
+}
+
+.square {
+    width: 100px;
+    height: 100px;
+    background: #333;
+    border: 2px solid #555;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2em;
+    cursor: pointer;
+    user-select: none;
+}
+
+#message {
+    margin-bottom: 20px;
+}
+
+.button {
+    padding: 10px 20px;
+    background: #0aa;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+}
+
+.button:hover {
+    background: #088;
+}

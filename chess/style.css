@@ -1,0 +1,21 @@
+body {
+    font-family: 'Quicksand', sans-serif;
+    background-color: #222;
+    color: #eee;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 20px;
+}
+
+.back-link {
+    margin-bottom: 20px;
+    color: #0aa;
+    text-decoration: none;
+}
+
+#board {
+    width: 400px;
+    margin-bottom: 20px;
+}
