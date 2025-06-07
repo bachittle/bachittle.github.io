@@ -1,0 +1,24 @@
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+  background: #222;
+  color: #fff;
+  font-family: 'Courier New', monospace;
+}
+
+canvas {
+  background: #000;
+  border: 4px solid #444;
+}
+
+a.back-link {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  color: #0aa;
+  text-decoration: none;
+}
