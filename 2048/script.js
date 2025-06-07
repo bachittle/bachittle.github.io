@@ -9,6 +9,8 @@ function init() {
     addRandomTile();
     draw();
     document.addEventListener('keydown', handleKey);
+    document.addEventListener('touchstart', handleTouchStart, { passive: false });
+    document.addEventListener('touchend', handleTouchEnd, { passive: false });
 }
 
 function handleKey(e) {
@@ -34,6 +36,34 @@ function handleKey(e) {
             setTimeout(() => alert('Game Over!'), 100);
         }
     }
+    if (e.preventDefault) e.preventDefault();
+}
+
+let touchStartX = null;
+let touchStartY = null;
+
+function handleTouchStart(e) {
+    if (e.touches.length === 1) {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+    }
+}
+
+function handleTouchEnd(e) {
+    if (touchStartX === null || touchStartY === null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    const absX = Math.abs(dx);
+    const absY = Math.abs(dy);
+    if (Math.max(absX, absY) > 30) {
+        if (absX > absY) {
+            handleKey({ key: dx > 0 ? 'ArrowRight' : 'ArrowLeft', preventDefault(){} });
+        } else {
+            handleKey({ key: dy > 0 ? 'ArrowDown' : 'ArrowUp', preventDefault(){} });
+        }
+    }
+    touchStartX = touchStartY = null;
+    if (e.preventDefault) e.preventDefault();
 }
 
 function addRandomTile() {
