@@ -29,7 +29,7 @@ function onSnapEnd() {
 }
 
 function init() {
-  board = Chessboard('board', {
+  board = ChessBoard('board', {
     draggable: true,
     position: 'start',
     onDragStart: onDragStart,

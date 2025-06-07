@@ -10,14 +10,26 @@ context.scale(grid, grid);
 
 const colors = [
     null,
-    '#FF0', // T
-    '#0F0', // O
-    '#F60', // L
-    '#06F', // J
-    '#0FF', // I
-    '#0F6', // S
-    '#F00'  // Z
+    '#FFEB3B', // T
+    '#FFC107', // O
+    '#FF9800', // L
+    '#2196F3', // J
+    '#00BCD4', // I
+    '#8BC34A', // S
+    '#F44336'  // Z
 ];
+
+let score = 0;
+const scoreEl = document.getElementById('score');
+const difficultySelect = document.getElementById('difficulty');
+let dropInterval = parseInt(difficultySelect.value);
+difficultySelect.addEventListener('change', () => {
+    dropInterval = parseInt(difficultySelect.value);
+});
+
+function updateScore() {
+    scoreEl.textContent = 'Score: ' + score;
+}
 
 function createMatrix(w, h) {
     const matrix = [];
@@ -80,6 +92,8 @@ function drawMatrix(matrix, offset) {
             if (value !== 0) {
                 context.fillStyle = colors[value];
                 context.fillRect(x + offset.x, y + offset.y, 1, 1);
+                context.strokeStyle = '#222';
+                context.strokeRect(x + offset.x, y + offset.y, 1, 1);
             }
         });
     });
@@ -131,6 +145,7 @@ function rotate(matrix, dir) {
 }
 
 function arenaSweep() {
+    let rowCount = 1;
     outer: for (let y = arena.length - 1; y >= 0; --y) {
         for (let x = 0; x < arena[y].length; ++x) {
             if (arena[y][x] === 0) {
@@ -140,7 +155,10 @@ function arenaSweep() {
         const row = arena.splice(y, 1)[0].fill(0);
         arena.unshift(row);
         ++y;
+        score += rowCount * 10;
+        rowCount *= 2;
     }
+    updateScore();
 }
 
 function playerDrop() {
@@ -183,11 +201,12 @@ function playerReset() {
     player.pos.x = ((arena[0].length / 2) | 0) - ((player.matrix[0].length / 2) | 0);
     if (collide(arena, player)) {
         arena.forEach(row => row.fill(0));
+        score = 0;
+        updateScore();
     }
 }
 
 let dropCounter = 0;
-let dropInterval = 1000;
 let lastTime = 0;
 
 function update(time = 0) {
@@ -222,4 +241,5 @@ const player = {
 };
 
 playerReset();
+updateScore();
 update();

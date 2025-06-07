@@ -1,14 +1,45 @@
-const words = ["javascript", "hangman", "arcade", "portfolio", "openai"];
+const easyWords = [
+    'cat', 'dog', 'book', 'fish', 'tree',
+    'car', 'door', 'sun', 'apple', 'hat'
+];
+const mediumWords = [
+    'javascript', 'hangman', 'arcade', 'portfolio',
+    'openai', 'variable', 'function', 'element'
+];
+const hardWords = [
+    'asynchronous', 'configuration', 'transpilation',
+    'responsiveness', 'implementation'
+];
+
+const hangmanStates = [
+` +---+\n |   |\n     |\n     |\n     |\n     |\n=======`,
+` +---+\n |   |\n O   |\n     |\n     |\n     |\n=======`,
+` +---+\n |   |\n O   |\n |   |\n     |\n     |\n=======`,
+` +---+\n |   |\n O   |\n/|   |\n     |\n     |\n=======`,
+` +---+\n |   |\n O   |\n/|\\  |\n     |\n     |\n=======`,
+` +---+\n |   |\n O   |\n/|\\  |\n/    |\n     |\n=======`,
+` +---+\n |   |\n O   |\n/|\\  |\n/ \\  |\n     |\n=======`
+];
+
 let selectedWord;
 let guessedLetters;
 let remaining;
+let maxAttempts;
+
+function chooseWord(difficulty) {
+    const list = difficulty === 'easy' ? easyWords :
+                 difficulty === 'hard' ? hardWords : mediumWords;
+    return list[Math.floor(Math.random() * list.length)];
+}
 
 function startGame() {
-    selectedWord = words[Math.floor(Math.random() * words.length)];
+    const diff = document.getElementById('difficulty').value;
+    maxAttempts = diff === 'easy' ? 8 : diff === 'hard' ? 4 : 6;
+    selectedWord = chooseWord(diff);
     guessedLetters = [];
-    remaining = 6;
-    updateDisplay();
+    remaining = maxAttempts;
     document.getElementById('message').textContent = '';
+    updateDisplay();
 }
 
 function updateDisplay() {
@@ -18,6 +49,14 @@ function updateDisplay() {
         .join(' ');
     document.getElementById('word').textContent = wordDisplay;
     document.getElementById('remaining').textContent = `Remaining guesses: ${remaining}`;
+    updateFigure();
+}
+
+function updateFigure() {
+    const mistakes = maxAttempts - remaining;
+    const index = Math.min(hangmanStates.length - 1,
+        Math.floor((mistakes / maxAttempts) * (hangmanStates.length - 1)));
+    document.getElementById('hangman-figure').textContent = hangmanStates[index];
 }
 
 function guess(letter) {
@@ -48,5 +87,6 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     });
     document.getElementById('reset-button').addEventListener('click', startGame);
+    document.getElementById('difficulty').addEventListener('change', startGame);
     startGame();
 });

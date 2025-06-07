@@ -7,7 +7,16 @@
     <link rel="stylesheet" href="tetris/style.css">
 </head>
 <body>
-    <a href="index.html" style="color:#0aa;text-decoration:none;margin-bottom:10px;">Back to main site</a>
+    <a href="arcade/index.html" style="color:#0aa;text-decoration:none;margin-bottom:10px;">Back to main site</a>
+    <p id="score">Score: 0</p>
+    <div id="controls">
+        <label for="difficulty">Difficulty:</label>
+        <select id="difficulty">
+            <option value="1000">Easy</option>
+            <option value="500" selected>Medium</option>
+            <option value="250">Hard</option>
+        </select>
+    </div>
     <canvas id="tetris"></canvas>
     <script src="tetris/game.js"></script>
 </body>

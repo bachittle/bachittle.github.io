@@ -30,6 +30,17 @@ body {
     height: 30px;
 }
 
+#hangman-figure {
+    white-space: pre;
+    font-family: monospace;
+    line-height: 1.2;
+    margin: 10px 0;
+}
+
+#difficulty {
+    margin: 10px 0;
+}
+
 #message {
     margin-top: 20px;
 }

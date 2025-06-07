@@ -14,3 +14,24 @@ canvas {
     border: 2px solid #555;
     background: #111;
 }
+
+#score {
+    margin: 10px 0;
+}
+
+#controls {
+    margin-bottom: 10px;
+}
+
+select {
+    background: #222;
+    color: #fff;
+    border: 1px solid #555;
+    padding: 2px 4px;
+}
+
+.back-link {
+    color: #0aa;
+    text-decoration: none;
+    margin-bottom: 10px;
+}
