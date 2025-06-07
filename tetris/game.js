@@ -4,9 +4,9 @@ const context = canvas.getContext('2d');
 const grid = 20;
 const cols = 10;
 const rows = 20;
+// Explicitly size the canvas so the pieces scale consistently across browsers
 canvas.width = cols * grid;
 canvas.height = rows * grid;
-context.scale(grid, grid);
 
 const colors = [
     null,
@@ -91,9 +91,9 @@ function drawMatrix(matrix, offset) {
         row.forEach((value, x) => {
             if (value !== 0) {
                 context.fillStyle = colors[value];
-                context.fillRect(x + offset.x, y + offset.y, 1, 1);
+                context.fillRect((x + offset.x) * grid, (y + offset.y) * grid, grid, grid);
                 context.strokeStyle = '#222';
-                context.strokeRect(x + offset.x, y + offset.y, 1, 1);
+                context.strokeRect((x + offset.x) * grid, (y + offset.y) * grid, grid, grid);
             }
         });
     });
