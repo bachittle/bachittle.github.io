@@ -1,6 +1,9 @@
 const canvas = document.getElementById('breakoutCanvas');
 const ctx = canvas.getContext('2d');
 
+// Prevent context menu on long press
+document.addEventListener('contextmenu', (e) => e.preventDefault());
+
 const isMobile = /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 const mobileControls = document.getElementById('mobile-controls');
 if (isMobile && mobileControls) {

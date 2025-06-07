@@ -5,17 +5,21 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    height: 100vh;
     margin: 0;
-    padding: 20px;
+    overflow: hidden;
 }
 
 .back-link {
-    margin-bottom: 20px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
     color: #0aa;
     text-decoration: none;
 }
 
 #board {
-    width: 400px;
-    margin-bottom: 20px;
+    width: 90vmin;
+    margin: 0;
 }

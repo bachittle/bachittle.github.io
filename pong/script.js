@@ -1,7 +1,22 @@
 const canvas = document.getElementById('pong-canvas');
 const ctx = canvas.getContext('2d');
-canvas.width = 600;
-canvas.height = 400;
+
+function isMobile() {
+  return /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}
+
+function setCanvasSize() {
+  if (isMobile() && window.innerHeight > window.innerWidth) {
+    canvas.width = Math.min(window.innerWidth * 0.9, 400);
+    canvas.height = Math.min(window.innerHeight * 0.7, 600);
+  } else {
+    canvas.width = 600;
+    canvas.height = 400;
+  }
+}
+
+setCanvasSize();
+window.addEventListener('resize', setCanvasSize);
 
 const paddleHeight = 80;
 const paddleWidth = 10;
@@ -114,6 +129,33 @@ document.addEventListener('keyup', e => {
   if (e.key === 'ArrowUp') upPressed = false;
   if (e.key === 'ArrowDown') downPressed = false;
 });
+
+if (isMobile()) {
+  const mobileControls = document.getElementById('mobile-controls');
+  if (mobileControls) {
+    mobileControls.style.display = 'flex';
+  }
+  const upBtn = document.getElementById('upBtn');
+  const downBtn = document.getElementById('downBtn');
+  if (upBtn && downBtn) {
+    const pressUp = () => { upPressed = true; };
+    const releaseUp = () => { upPressed = false; };
+    const pressDown = () => { downPressed = true; };
+    const releaseDown = () => { downPressed = false; };
+    upBtn.addEventListener('touchstart', pressUp);
+    upBtn.addEventListener('touchend', releaseUp);
+    downBtn.addEventListener('touchstart', pressDown);
+    downBtn.addEventListener('touchend', releaseDown);
+  }
+
+  canvas.addEventListener('touchmove', e => {
+    const rect = canvas.getBoundingClientRect();
+    const touchY = e.touches[0].clientY - rect.top;
+    playerY = Math.min(Math.max(touchY - paddleHeight / 2, 0), canvas.height - paddleHeight);
+    e.preventDefault();
+  }, { passive: false });
+  document.body.addEventListener('touchmove', e => e.preventDefault(), { passive: false });
+}
 
 function movePlayer() {
   if (upPressed) playerY = Math.max(0, playerY - 6);

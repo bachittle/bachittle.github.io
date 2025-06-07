@@ -1,6 +1,37 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
+const isMobile = /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+const mobileControls = document.getElementById('mobile-controls');
+
+const keys = {};
+
+if (isMobile) {
+    document.body.classList.add('mobile');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    document.body.addEventListener('touchmove', e => e.preventDefault(), { passive: false });
+    if (mobileControls) {
+        mobileControls.style.display = 'flex';
+        const leftBtn = document.getElementById('leftBtn');
+        const rightBtn = document.getElementById('rightBtn');
+        const shootBtn = document.getElementById('shootBtn');
+        const pressLeft = () => { keys['ArrowLeft'] = true; };
+        const releaseLeft = () => { keys['ArrowLeft'] = false; };
+        const pressRight = () => { keys['ArrowRight'] = true; };
+        const releaseRight = () => { keys['ArrowRight'] = false; };
+        leftBtn && leftBtn.addEventListener('touchstart', pressLeft);
+        leftBtn && leftBtn.addEventListener('touchend', releaseLeft);
+        rightBtn && rightBtn.addEventListener('touchstart', pressRight);
+        rightBtn && rightBtn.addEventListener('touchend', releaseRight);
+        shootBtn && shootBtn.addEventListener('touchstart', shoot);
+    }
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+}
+
 const player = { x: canvas.width / 2 - 15, y: canvas.height - 20, width: 30, height: 10, speed: 5 };
 const bullets = [];
 const enemyBullets = [];
@@ -123,8 +154,6 @@ function gameOver() {
     alert('Game Over! Score: ' + score);
     document.location.reload();
 }
-
-const keys = {};
 document.addEventListener('keydown', e => {
     keys[e.code] = true;
     if (e.code === 'Space') shoot();

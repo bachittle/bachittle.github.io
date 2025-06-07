@@ -22,3 +22,15 @@ a.back-link {
   color: #0aa;
   text-decoration: none;
 }
+
+#mobile-controls {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 10px;
+}
+
+#mobile-controls button {
+  font-size: 24px;
+  padding: 10px 20px;
+}
