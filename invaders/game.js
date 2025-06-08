@@ -29,6 +29,9 @@ if (isMobile) {
     window.addEventListener('resize', () => {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
+        player.y = canvas.height - 20;
+        player.x = Math.min(player.x, canvas.width - player.width);
+        createAliens();
     });
 }
 
@@ -42,6 +45,7 @@ let level = 1;
 let alienSpeed = 1;
 let enemyBulletSpeed = 3;
 let shootChance = 0.003;
+let isGameOver = false;
 
 const scoreEl = document.getElementById('score');
 const levelEl = document.getElementById('level');
@@ -49,10 +53,16 @@ const levelEl = document.getElementById('level');
 function createAliens() {
     aliens.length = 0;
     const rows = Math.min(1 + level, 5); // start easy and add rows
-    const cols = 8;
+    const alienWidth = 30;
+    const alienHeight = 20;
+    const spacing = 20;
+    const maxCols = Math.max(1, Math.floor((canvas.width - 60) / (alienWidth + spacing)));
+    const cols = Math.min(8, maxCols);
+    const totalWidth = cols * (alienWidth + spacing) - spacing;
+    const startX = (canvas.width - totalWidth) / 2;
     for (let r = 0; r < rows; r++) {
         for (let c = 0; c < cols; c++) {
-            aliens.push({ x: 60 + c * 50, y: 40 + r * 40, width: 30, height: 20 });
+            aliens.push({ x: startX + c * (alienWidth + spacing), y: 40 + r * 40, width: alienWidth, height: alienHeight });
         }
     }
 }
@@ -151,6 +161,8 @@ function alienShoot() {
 }
 
 function gameOver() {
+    if (isGameOver) return;
+    isGameOver = true;
     alert('Game Over! Score: ' + score);
     document.location.reload();
 }
