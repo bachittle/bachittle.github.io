@@ -1,6 +1,9 @@
 const canvas = document.getElementById('tetris');
 const context = canvas.getContext('2d');
 
+// Mobile detection used throughout the project
+const isMobile = /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
 const grid = 20;
 const cols = 10;
 const rows = 20;
@@ -233,6 +236,49 @@ document.addEventListener('keydown', event => {
         playerRotate(1);
     }
 });
+
+// Touch controls for mobile devices
+let touchStartX = null;
+let touchStartY = null;
+
+function handleTouchStart(e) {
+    if (e.touches.length === 1) {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+    }
+    if (e.preventDefault) e.preventDefault();
+}
+
+function handleTouchEnd(e) {
+    if (touchStartX === null || touchStartY === null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    const absX = Math.abs(dx);
+    const absY = Math.abs(dy);
+    if (Math.max(absX, absY) > 30) {
+        if (absX > absY) {
+            if (dx > 0) {
+                playerMove(1);
+            } else {
+                playerMove(-1);
+            }
+        } else {
+            if (dy > 0) {
+                playerDrop();
+            } else {
+                playerRotate(1);
+            }
+        }
+    }
+    touchStartX = touchStartY = null;
+    if (e.preventDefault) e.preventDefault();
+}
+
+if (isMobile) {
+    document.body.addEventListener('touchmove', e => e.preventDefault(), { passive: false });
+    document.addEventListener('touchstart', handleTouchStart, { passive: false });
+    document.addEventListener('touchend', handleTouchEnd, { passive: false });
+}
 
 const arena = createMatrix(cols, rows);
 const player = {

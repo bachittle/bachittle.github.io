@@ -2,6 +2,7 @@ const size = 4;
 const isMobile = /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 let board = [];
 let score = 0;
+let newTile = null;
 
 function init() {
     board = Array.from({ length: size }, () => Array(size).fill(0));
@@ -64,7 +65,7 @@ function handleTouchEnd(e) {
         if (absX > absY) {
             handleKey({ key: dx > 0 ? 'ArrowRight' : 'ArrowLeft', preventDefault(){} });
         } else {
-            handleKey({ key: dy > 0 ? 'ArrowDown' : 'ArrowUp', preventDefault(){} });
+            handleKey({ key: dy > 0 ? 'ArrowUp' : 'ArrowDown', preventDefault(){} });
         }
     }
     touchStartX = touchStartY = null;
@@ -81,6 +82,7 @@ function addRandomTile() {
     if (empty.length === 0) return;
     const { r, c } = empty[Math.floor(Math.random() * empty.length)];
     board[r][c] = Math.random() < 0.9 ? 2 : 4;
+    newTile = { r, c };
 }
 
 function slide(row) {
@@ -144,15 +146,22 @@ function arraysEqual(a, b) {
 function draw() {
     const boardEl = document.getElementById('board');
     boardEl.innerHTML = '';
-    board.forEach(row => {
-        row.forEach(value => {
+    for (let r = 0; r < size; r++) {
+        for (let c = 0; c < size; c++) {
+            const value = board[r][c];
             const tile = document.createElement('div');
             tile.classList.add('tile');
-            if (value) tile.classList.add('tile-' + value);
+            if (value) {
+                tile.classList.add('tile-' + value);
+                if (newTile && newTile.r === r && newTile.c === c) {
+                    tile.classList.add('tile-new');
+                }
+            }
             tile.textContent = value ? value : '';
             boardEl.appendChild(tile);
-        });
-    });
+        }
+    }
+    newTile = null;
     document.getElementById('score-value').textContent = score;
 }
 
