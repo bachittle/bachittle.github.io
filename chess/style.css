@@ -23,3 +23,18 @@ body {
     width: 90vmin;
     margin: 0;
 }
+
+#controls {
+    margin: 10px 0;
+}
+
+select {
+    background: #222;
+    color: #fff;
+    border: 1px solid #555;
+    padding: 2px 4px;
+}
+
+#result {
+    margin-top: 10px;
+}

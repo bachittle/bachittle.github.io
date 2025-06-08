@@ -9,7 +9,19 @@
 </head>
 <body>
     <a href="arcade/index.html" class="back-link">Back to Main Site</a>
+    <p id="elo-display"></p>
+    <div id="controls">
+        <label for="ai-elo">AI ELO:</label>
+        <select id="ai-elo">
+            <option value="800">800</option>
+            <option value="1200" selected>1200</option>
+            <option value="1600">1600</option>
+            <option value="2000">2000</option>
+        </select>
+        <button id="restart">Restart</button>
+    </div>
     <div id="board"></div>
+    <p id="result"></p>
     <script src="https://cdn.jsdelivr.net/npm/chessboardjs@0.0.1/www/js/jquery-1.10.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chessboardjs@0.0.1/www/js/chess.js"></script>
     <script src="chess/lib/chessboard.js"></script>
