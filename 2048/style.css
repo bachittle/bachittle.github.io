@@ -42,6 +42,20 @@ body {
     font-size: 24px;
     font-weight: bold;
     color: #776e65;
+    transition: transform 0.1s ease;
+}
+
+.tile-new {
+    animation: pop 0.2s ease;
+}
+
+@keyframes pop {
+    from {
+        transform: scale(0);
+    }
+    to {
+        transform: scale(1);
+    }
 }
 
 .tile-2 { background: #eee4da; }
