@@ -89,14 +89,20 @@ function createPiece(type) {
     }
 }
 
-function drawMatrix(matrix, offset) {
+function drawMatrix(matrix, offset, ghost = false) {
     matrix.forEach((row, y) => {
         row.forEach((value, x) => {
             if (value !== 0) {
+                if (ghost) {
+                    context.globalAlpha = 0.3;
+                }
                 context.fillStyle = colors[value];
                 context.fillRect((x + offset.x) * grid, (y + offset.y) * grid, grid, grid);
                 context.strokeStyle = '#222';
                 context.strokeRect((x + offset.x) * grid, (y + offset.y) * grid, grid, grid);
+                if (ghost) {
+                    context.globalAlpha = 1;
+                }
             }
         });
     });
@@ -107,6 +113,8 @@ function draw() {
     context.fillRect(0, 0, canvas.width, canvas.height);
 
     drawMatrix(arena, { x: 0, y: 0 });
+    const ghostPos = getGhostPosition();
+    drawMatrix(player.matrix, ghostPos, true);
     drawMatrix(player.matrix, player.pos);
 }
 
@@ -145,6 +153,18 @@ function rotate(matrix, dir) {
     } else {
         matrix.reverse();
     }
+}
+
+function getGhostPosition() {
+    const ghost = {
+        pos: { x: player.pos.x, y: player.pos.y },
+        matrix: player.matrix
+    };
+    while (!collide(arena, ghost)) {
+        ghost.pos.y++;
+    }
+    ghost.pos.y--;
+    return ghost.pos;
 }
 
 function arenaSweep() {
